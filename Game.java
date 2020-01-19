@@ -26,8 +26,7 @@ public class Game
     private HashMap<String, Integer> itemValue;
     private Inventory inv;
     private int powerLevel = 0;
-    //game items    
-    
+
     /**
      * Create the game and initialise its internal map.
      */
