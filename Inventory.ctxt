@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Inventory
+comment0.text=\r\n\ class\ inventory\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (jouw\ naam)\r\n\ @version\ (versie\ nummer\ of\ datum)\r\n
+comment1.params=
+comment1.target=Inventory()
+comment2.params=
+comment2.target=void\ showInv()
+comment3.params=itemIndex\ number
+comment3.target=void\ increment(int,\ int)
+comment4.params=itemIndex\ number
+comment4.target=void\ decrement(int,\ int)
+comment5.params=craftedItemIndex
+comment5.target=void\ craft(int)
+numComments=6
