@@ -26,8 +26,7 @@ public class Game
     private HashMap<String, Integer> itemValue;
     private Inventory inv;
     private int powerLevel = 0;
-    //game items    
-    
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -298,6 +297,7 @@ public class Game
 
         if(itemToCraft.equals("sticks")){
             inv.craft(6);
+
         }
         else if(itemToCraft.equals("wood_pickaxe")){
             inv.craft(7); 
@@ -308,19 +308,19 @@ public class Game
     private void use(Command command){
         
         if(!command.hasSecondWord()){ 
-        //&& currentRoom.getItemID() == 1){
             System.out.println("what do you want to use");
-            //increment(1);
             return;
         }
+        
+        
         String itemToUse = command.getSecondWord();
         if(itemToUse.equals("hand") && currentRoom.getItemID() == 1){
             increment(1);
         }
-        
-        if(itemToUse.equals("wood_pickaxe")){
+        if(itemToUse.equals("wood_pickaxe") && currentRoom.getItemID() == 3){
             inv.use(7);
         }
+       
     }
 
 }

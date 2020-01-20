@@ -43,15 +43,14 @@ public class Inventory
         ItemInventory newItem = this.inv.get(craftedItemIndex);
         ItemInventory wood = this.inv.get(1);
         ItemInventory sticks = this.inv.get(6);
+
         if(craftedItemIndex == 6){
             if(wood.getNumber() >= 2) {
-                
                 wood.decrement(2);
                 newItem.increment(4);
             }
         }
         else if(craftedItemIndex == 7){
-
             if(wood.getNumber() >= 3 && sticks.getNumber() >= 2) {
                 if(newItem.getNumber() >= 1){ 
                 System.out.println("You already got a " + newItem.getItemName());
@@ -70,5 +69,6 @@ public class Inventory
             stone.increment(3);
         }
     }
+
 
 }
