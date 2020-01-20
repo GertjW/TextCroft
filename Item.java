@@ -7,6 +7,7 @@
  */
 public class Item
 {
+    
    /**
     * Fields
     */
@@ -22,7 +23,23 @@ public class Item
     * @param Set String Name
     * @param return String;
     */
-  
+  /*
+   * 
+   * 
+   * 
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * V
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * V
+   * V
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * DEZE CODE WORDT NIET MEER GEBRUIKT
+   * 
+   * 
+   */
    public Item(String itemName, int itemID, int itemWeight){
        this.itemName = itemName;
     }
@@ -90,4 +107,5 @@ public class Item
       itemName = "wood";
       return itemName;
     }
+    
 }

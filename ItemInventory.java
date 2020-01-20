@@ -53,7 +53,7 @@ public class ItemInventory
 
     }
     public void decrement(int i){
-       if(this.number - i > 0){
+       if(this.number - i >= 0){
            this.number -= i;
        }
     }

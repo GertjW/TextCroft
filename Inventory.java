@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Inventory
 {
     HashMap<Integer, ItemInventory> inv = new HashMap<Integer, ItemInventory>();
-
+    private boolean craftingTable;
     public Inventory(){
 
         this.inv.put(1, new ItemInventory("wood", 1, 0, 64));
@@ -18,6 +18,12 @@ public class Inventory
         this.inv.put(5, new ItemInventory("iron", 5, 0, 32));
         this.inv.put(6, new ItemInventory("sticks", 6, 0, 64));
         this.inv.put(7, new ItemInventory("wood_PickAxe", 7, 0, 1));
+        this.inv.put(8, new ItemInventory("cTABLE", 8, 0, 1));
+        this.inv.put(9, new ItemInventory("stone_Axe", 9, 0, 1));
+         this.inv.put(999, new ItemInventory("devmode", 999, 0, 999));
+        
+
+        craftingTable = false;
     }
 
     public void showInv() {
@@ -27,6 +33,10 @@ public class Inventory
                 System.out.println(item.getItemName() + " : " + item.getNumber());
             }
         }
+    }
+
+    public void showCraftingTableStatus(){
+        System.out.println("craftingTable = " + craftingTable);
     }
 
     public void increment(int itemIndex, int number){
@@ -42,33 +52,76 @@ public class Inventory
     public void craft(int craftedItemIndex){
         ItemInventory newItem = this.inv.get(craftedItemIndex);
         ItemInventory wood = this.inv.get(1);
+        ItemInventory stone = this.inv.get(3);
         ItemInventory sticks = this.inv.get(6);
-
-        if(craftedItemIndex == 6){
+        switch(craftedItemIndex){
+            case 6:
+            
             if(wood.getNumber() >= 2) {
                 wood.decrement(2);
                 newItem.increment(4);
             }
-        }
-        else if(craftedItemIndex == 7){
-            if(wood.getNumber() >= 3 && sticks.getNumber() >= 2) {
-                if(newItem.getNumber() >= 1){ 
-                System.out.println("You already got a " + newItem.getItemName());
-                }else{
-                wood.decrement(3);
-                sticks.decrement(2);
-                newItem.increment(1);
+            else{System.out.println("you cant craft this");}
+            break;
+      
+            case 7:    
+            if(craftingTable == false){
+                System.out.println("You need a craftingTable to craft this");
             }
+            else if(wood.getNumber() >= 3 && sticks.getNumber() >= 2){
+                if(newItem.getNumber() < 1){
+                    wood.decrement(3);
+                    sticks.decrement(2);
+                    newItem.increment(1);    
+                }
+                else{
+                    System.out.println("You already got a " + newItem.getItemName());
+                }
+            }
+            break;
+            
+            case 8:
+            if(wood.getNumber() >= 4 && craftingTable == false){
+            wood.decrement(4); 
+            craftingTable = true;
+            return;
         }
-    }
+            else{System.out.println("you cant craft this");}
+        break;
+        
+        case 9:    
+            if(craftingTable == false){
+                System.out.println("You need a craftingTable to craft this");
+            }
+            else if(stone.getNumber() >= 3 && sticks.getNumber() >= 2){
+                if(newItem.getNumber() < 1){
+                    stone.decrement(3);
+                    sticks.decrement(2);
+                    newItem.increment(1);    
+                }
+                else{
+                    System.out.println("You already got a " + newItem.getItemName());
+                } break;
+            }
+            
+    } 
 }
+
     public void use(int index){
         ItemInventory itemToUse = this.inv.get(index);
         ItemInventory stone = this.inv.get(3);
+        ItemInventory wood = this.inv.get(1);
         if(itemToUse.getItemID() == 7 && itemToUse.getNumber() == 1){
-            stone.increment(3);
+            stone.increment(1);
         }
+        if(itemToUse.getItemID() == 9 && itemToUse.getNumber() == 1){
+            wood.increment(3);
+        }
+        if(itemToUse.getItemID() == 999){
+          wood.increment(40);
+          stone.increment(40);
+          ItemInventory sticks = this.inv.get(6);
     }
 
-
+}
 }
