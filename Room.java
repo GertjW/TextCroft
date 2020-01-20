@@ -99,6 +99,10 @@ public class Room
     {
         return exits.get(direction);
     }
+    
+    public Room getExit(int roomID){
+        return exits.get(roomID);
+    }
 
     public int getRoomID(){
         return roomID;   

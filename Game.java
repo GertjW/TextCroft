@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
+import java.lang.reflect.*;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -22,6 +23,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private HashMap<Integer, Room> rooms = new HashMap<>();
     private ArrayList<String> items; 
     private HashMap<String, Integer> itemValue;
     private Inventory inv;
@@ -57,23 +59,23 @@ public class Game
         //iron 5
 
         //null = 0
-        forest = new Room("You are now in the forest", 1, 1);
-        winter= new Room("You are in a winter biome", 2, 1);
-        desert = new Room("This is a sandy place, looks like a desert", 3, 2);
-        jungle = new Room("this looks like a jungle", 4, 1);
-        jungle_tempel = new Room("You have found a hidden jungle tempel, maybe there are diamonds nearby.", 5, 4);
-        village= new Room("You are now in a nice looking village, say hi to the people here! You see an emerald, don't steal it!", 6, 6);
-        savanna = new Room("You are in a Savanna", 7, 1);
-        house = new Room("Welcome in you're own house", 8, 0);
-        cave= new Room("You are under the ground, in a cave.", 9, 3);
-        mineshaft= new Room("This is a MineShaft", 10, 5);
-        end = new Room("This is the end, kill the dragon and finish the game.", 11, 0);
-        nether1 = new Room("You are now in the Nether", 12, 0);
-        nether2 = new Room("You are now in the Nether2", 13, 0);
-        nether3 = new Room("You are now in the Nether3", 14, 0);
-        nether4 = new Room("You are now in the Nether4", 15, 0);
-        nether5 = new Room("You are now in the Nether", 16, 0);
-        nether6 = new Room("Look an portal, a way out!", 17, 0);
+        rooms.put(1, forest = new Room("You are now in the forest", 1, 1));
+        rooms.put(2, winter= new Room("You are in a winter biome", 2, 1));
+        rooms.put(3, desert = new Room("This is a sandy place, looks like a desert", 3, 2));
+        rooms.put(4, jungle = new Room("this looks like a jungle", 4, 1));
+        rooms.put(5, jungle_tempel = new Room("You have found a hidden jungle tempel, maybe there are diamonds nearby.", 5, 4));
+        rooms.put(6, village= new Room("You are now in a nice looking village, say hi to the people here! You see an emerald, don't steal it!", 6, 6));
+        rooms.put(7, savanna = new Room("You are in a Savanna", 7, 1));
+        rooms.put(8, house = new Room("Welcome in you're own house", 8, 0));
+        rooms.put(9, cave= new Room("You are under the ground, in a cave.", 9, 3));
+        rooms.put(10, mineshaft= new Room("This is a MineShaft", 10, 5));
+        rooms.put(11, end = new Room("This is the end, kill the dragon and finish the game.", 11, 0));
+        rooms.put(12, nether1 = new Room("You are now in the Nether", 12, 0));
+        rooms.put(13, nether2 = new Room("You are now in the Nether2", 13, 0));
+        rooms.put(14, nether3 = new Room("You are now in the Nether3", 14, 0));
+        rooms.put(15, nether4 = new Room("You are now in the Nether4", 15, 0));
+        rooms.put(16, nether5 = new Room("You are now in the Nether", 16, 0));
+        rooms.put(17, nether6 = new Room("Look an portal, a way out!", 17, 0));
 
         // initialise room exits
         forest.setExit("north", village);
@@ -125,7 +127,8 @@ public class Game
         nether6.setExit("south", savanna);
         nether6.setExit("west", nether3);
 
-        currentRoom = forest;  // start game outside     
+        currentRoom = forest;  // start game outside
+        pushStack(stack, currentRoom);
     }
 
     /**
@@ -200,7 +203,14 @@ public class Game
             craft(command);
         }
         else if (commandWord.equals("back")){
-            popStack(stack, currentRoom);
+            if(stack.size() == 1){
+                System.out.println("Je kan niet verder terug");
+                System.out.println(currentRoom.getLongDescription());
+            } else {
+            //if (popStack(stack, currentRoom) != 0) {
+                goRoom(popStack(stack, currentRoom));
+            //} else {
+            }
         }    
 
         // else command not recognised.
@@ -274,7 +284,11 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
         }
     }
-
+    private void goRoom(int roomID) 
+    {
+        currentRoom = rooms.get(roomID);
+        System.out.println(currentRoom.getLongDescription());
+    }
     /** x
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
@@ -292,16 +306,17 @@ public class Game
     }
     private void pushStack(Stack stack, Room currentRoom) {
         stack.push(currentRoom.getRoomID());
-        System.out.println("stack: " + stack);
     }
     
-     private void popStack(Stack stack, Room currentRoom){
-        stack.pop();
-        System.out.println("stack: " + stack);
-        int newRoomID = (Integer) stack.peek();
-
-        System.out.println(currentRoom.getLongDescription());
-        }
+     private int popStack(Stack stack, Room currentRoom){
+                
+       if(stack.size() == 1){
+           return 0;
+        } else {
+            stack.pop();
+            return (Integer) stack.peek();
+       }
+    }
 
     private void increment(int i){
         this.inv.increment(currentRoom.getItemID(), i);
@@ -354,4 +369,5 @@ public class Game
     }
 
 }
+
 
