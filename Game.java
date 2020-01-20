@@ -76,13 +76,14 @@ public class Game
         //stone = 3
         //diamond = 4
         //iron = 5
+        // emerald = 6
         //null = 0
         forest = new Room("You are now in the forest", 1, 1);
         winter= new Room("You are in a winter biome", 2, 1);
         desert = new Room("This is a sandy place, looks like a desert", 3, 2);
         jungle = new Room("this looks like a jungle", 4, 1);
-        jungle_tempel = new Room("You have found a hidden jungle tempel, and you see a big Emerald, pick it up!.", 5, 4);
-        village= new Room("You are now in a nice looking village, say hi to the people here!", 6, 4);
+        jungle_tempel = new Room("You have found a hidden jungle tempel, maybe there are diamonds nearby.", 5, 4);
+        village= new Room("You are now in a nice looking village, say hi to the people here! You see an emerald, don't steal it!", 6, 6);
         savanna = new Room("You are in a Savanna", 7, 1);
         house = new Room("Welcome in you're own house", 8, 0);
         cave= new Room("You are under the ground, in a cave.", 9, 3);
@@ -331,6 +332,15 @@ public class Game
             System.out.println(melding);
             
         }
+        else if(currentRoom.getItemID() == (6)) {
+        System.out.println("You shouldn't have stolen that emerald, Herobrine has imprisoned you and you have to pay half of your resources to get out.");
+        wood = wood / 2;
+        sand = sand / 2;
+        stone = stone/ 2;
+        iron = iron / 2;
+        diamond = diamond / 2;
+       
+    }
         else{ System.out.println("You can't carry this anymore");
         }
 

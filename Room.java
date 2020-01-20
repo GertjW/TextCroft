@@ -33,6 +33,7 @@ public class Room
     private int stone;
     private int iron;
     public int diamond;
+    private int emerald;
 
     /**
      * Create a room described "description". Initially, it has
@@ -144,6 +145,11 @@ public class Room
             int iron = 0;
             itemWeight = 3;
         }  
+        else if (getItemID() == (6)){
+        itemName = "emerald";
+        int emerald = 0;
+        itemWeight = 1;
+        }
     }
 
     public String getItemName(){
@@ -161,6 +167,9 @@ public class Room
         }
         else if(getItemID() == (5)){
             itemName = "iron";
+        }
+        else if(getItemID() == (6)){
+        itemName = "emerald";
         }
         return itemName;
     }
