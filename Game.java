@@ -1,4 +1,3 @@
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
@@ -19,23 +18,15 @@ import java.util.*;
  * @version 2016.02.29
  */
 
-public class Game
+public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-    private Item currentItem;
     private ArrayList<String> items; 
     private HashMap<String, Integer> itemValue;
+    private Inventory inv;
     private int powerLevel = 0;
     //game items
-    private int wood = 0;
-    private int sand = 0;
-    private int stone = 0;
-    private int iron = 0;
-    private int diamond = 0;
-    private int stick = 0;
-    private int wood_PickAxe = 0;
-    private int emerald = 0;
     
     private Stack<Integer> stack = new Stack<Integer>();
     
@@ -46,22 +37,10 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        this.inv = new Inventory();
+
     }
 
-    private void pushStack(Stack stack, Room currentRoom) {
-        stack.push(currentRoom.getRoomID());
-        System.out.println("stack: " + stack);
-    }
-    
-     private void popStack(Stack stack, Room currentRoom){
-        stack.pop();
-        System.out.println("stack: " + stack);
-        int newRoomID = (Integer) stack.peek();
-
-        System.out.println(currentRoom.getLongDescription());
-        }
-    
-    
     /**
      * Create all the rooms and link their exits together.
      */
@@ -75,8 +54,8 @@ public class Game
         //sand = 2
         //stone = 3
         //diamond = 4
-        //iron = 5
-        // emerald = 6
+        //iron 5
+
         //null = 0
         forest = new Room("You are now in the forest", 1, 1);
         winter= new Room("You are in a winter biome", 2, 1);
@@ -176,6 +155,7 @@ public class Game
         System.out.println("Welcome in your new survival world");
         System.out.println("Textcraft is a survival game, where you need to collect stuff.");
         System.out.println("Eventually you have to go to the end, and kill the Ender Dragon.");
+        inv.showCraftingTableStatus();
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -206,7 +186,7 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("use")){
-            increment(1);
+            use(command);
 
         }
         else if (commandWord.equals("items")){
@@ -214,7 +194,7 @@ public class Game
 
         }
         else if (commandWord.equals("inv")){
-            inventory();
+            this.inv.showInv();
         }
         else if (commandWord.equals("craft")){
             craft(command);
@@ -222,7 +202,7 @@ public class Game
         else if (commandWord.equals("back")){
             popStack(stack, currentRoom);
         }    
-        
+
         // else command not recognised.
         return wantToQuit;
     }
@@ -236,7 +216,6 @@ public class Game
      */ 
 
     private void ItemToGet(){
-        //if(currentRoom.getShortDescription().equals("You are now in the forest")){
         if(currentRoom.getRoomID()==(1)){
             System.out.println("You can get here " + currentRoom.getItemName());}
         else if(currentRoom.getRoomID()==(2)){
@@ -262,10 +241,12 @@ public class Game
         System.out.println("You can try to get some objects");
         System.out.println("In everyroom there are different objects to farm");
         System.out.println();
+        inv.showCraftingTableStatus();
+        System.out.println();
         System.out.println("Your command words are:");
         System.out.println("go quit help use items inv back craft");
     }
-    
+
     /** 
      * Try to in to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -276,8 +257,9 @@ public class Game
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
+        
+        
         }
-
         String direction = command.getSecondWord();
 
         // Try to leave current room.
@@ -292,7 +274,7 @@ public class Game
             System.out.println(currentRoom.getLongDescription());
         }
     }
-        
+
     /** x
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
@@ -308,93 +290,68 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
+    private void pushStack(Stack stack, Room currentRoom) {
+        stack.push(currentRoom.getRoomID());
+        System.out.println("stack: " + stack);
+    }
+    
+     private void popStack(Stack stack, Room currentRoom){
+        stack.pop();
+        System.out.println("stack: " + stack);
+        int newRoomID = (Integer) stack.peek();
+
+        System.out.println(currentRoom.getLongDescription());
+        }
 
     private void increment(int i){
-        String melding = "Een succes bereikt";
-        if(currentRoom.getItemID() == (1) && wood < 64){
-            wood += i;
-            System.out.println(melding);
-        }
-        else if(currentRoom.getItemID() == (2) && sand < 64){
-            sand += i;
-            System.out.println(melding);
-        }
-        else if(currentRoom.getItemID() == (3) && stone < 64){
-            stone += i; 
-            System.out.println(melding);
-        }
-        else if(currentRoom.getItemID() == (5) && iron < 32){
-            iron += i;
-            System.out.println(melding);
-        }
-        else if(currentRoom.getItemID() == (4) && diamond < 5){
-            diamond  += i;
-            System.out.println(melding);
-            
-        }
-        else if(currentRoom.getItemID() == (6)) {
-        System.out.println("You shouldn't have stolen that emerald, Herobrine has imprisoned you and you have to pay half of your resources to get out.");
-        wood = wood / 2;
-        sand = sand / 2;
-        stone = stone/ 2;
-        iron = iron / 2;
-        diamond = diamond / 2;
-       
-    }
-        else{ System.out.println("You can't carry this anymore");
-        }
-
+        this.inv.increment(currentRoom.getItemID(), i);
     }
 
-    private void inventory(){
-        HashMap<String, Integer> itemValue = new HashMap<String, Integer>();
-        itemValue.put("wood", wood);
-        itemValue.put("sand", sand);
-        itemValue.put("stone", stone);
-        itemValue.put("diamond", diamond);
-        itemValue.put("iron", iron);
-        itemValue.put("sticks", stick);
-        itemValue.put("Wooden PickAxe", wood_PickAxe);
-  
-        for(String i : itemValue.keySet()){
-            if(itemValue.get(i) > 0)
-                System.out.println(i + " : "  + itemValue.get(i));
-        }
-
-        /*for(int i = 0; i < items.size(); i++){
-        System.out.println(items.get(i) + " : " + show());
-        }
-         */
-    }
     private void craft(Command command){
         if(!command.hasSecondWord()){
-          System.out.println("What do you want to craft");
-          return;   
+            System.out.println("What do you want to craft");
+            return;   
         }
         String itemToCraft = command.getSecondWord();
-        
+
         if(itemToCraft.equals("sticks")){
-           if(wood >= 2){
-           wood -= 2;
-           stick += 4;
-        } else{System.out.println("You cant craft this");
+            inv.craft(6);
         }
+        else if(itemToCraft.equals("wood_pickaxe")){
+            inv.craft(7); 
         }
-        else if(itemToCraft.equals("wood_PickAxe")){
-         if(wood_PickAxe >= 1){
-             System.out.println("You already got a Wooden Pickaxe");
-            }
-         else if(wood >= 3 && stick >= 2){
-             wood -= 3;
-             stick -= 2;
-             wood_PickAxe += 1;
-            }
-            
-             else{System.out.println("You cant craft this");
+        else if(itemToCraft.equals("craftingtable")){
+            inv.craft(8);
+        }
+        else if(itemToCraft.equals("stone_axe")){
+            inv.craft(9);
+
+    }
+        else{System.out.println("You cant craft this");
         }
     }
-  
-}
-}
+    private void use(Command command){
+        
+        if(!command.hasSecondWord()){
+            System.out.println("what do you want to use");
+            return;
+        }
+        String itemToUse = command.getSecondWord();
+        if(itemToUse.equals("hand") && currentRoom.getItemID() == 1){
+            increment(1);
 
+        }
+        
+        if(itemToUse.equals("wood_pickaxe") && currentRoom.getItemID() == 3){
+            inv.use(7);
+        }
+        if(itemToUse.equals("stone_axe") && currentRoom.getItemID() == 1){
+            inv.use(9);
+        }
+        if(itemToUse.equals("dev") && currentRoom.getItemID() == 1){
+            inv.use(999);
+        }
+    }
+
+}
 
