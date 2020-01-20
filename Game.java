@@ -55,13 +55,14 @@ public class Game
         //stone = 3
         //diamond = 4
         //iron 5
+
         //null = 0
         forest = new Room("You are now in the forest", 1, 1);
         winter= new Room("You are in a winter biome", 2, 1);
         desert = new Room("This is a sandy place, looks like a desert", 3, 2);
         jungle = new Room("this looks like a jungle", 4, 1);
-        jungle_tempel = new Room("You have found a hidden jungle tempel, and you see a big diamond, pick it up!.", 5, 4);
-        village= new Room("You are now in a nice looking village, say hi to the people here!", 6, 4);
+        jungle_tempel = new Room("You have found a hidden jungle tempel, maybe there are diamonds nearby.", 5, 4);
+        village= new Room("You are now in a nice looking village, say hi to the people here! You see an emerald, don't steal it!", 6, 6);
         savanna = new Room("You are in a Savanna", 7, 1);
         house = new Room("Welcome in you're own house", 8, 0);
         cave= new Room("You are under the ground, in a cave.", 9, 3);
@@ -186,7 +187,6 @@ public class Game
         }
         else if (commandWord.equals("use")){
             use(command);
-            //increment(1);
 
         }
         else if (commandWord.equals("items")){
@@ -216,7 +216,6 @@ public class Game
      */ 
 
     private void ItemToGet(){
-        //if(currentRoom.getShortDescription().equals("You are now in the forest")){
         if(currentRoom.getRoomID()==(1)){
             System.out.println("You can get here " + currentRoom.getItemName());}
         else if(currentRoom.getRoomID()==(2)){
@@ -324,17 +323,15 @@ public class Game
         }
         else if(itemToCraft.equals("stone_axe")){
             inv.craft(9);
-        }
 
+    }
         else{System.out.println("You cant craft this");
         }
     }
     private void use(Command command){
         
-        if(!command.hasSecondWord()){ 
-        //&& currentRoom.getItemID() == 1){
+        if(!command.hasSecondWord()){
             System.out.println("what do you want to use");
-            //increment(1);
             return;
         }
         String itemToUse = command.getSecondWord();
