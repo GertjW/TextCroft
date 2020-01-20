@@ -22,13 +22,17 @@ public class Room
     private HashMap<String, Room> exits; // stores exits of this room.
     private int roomID;
     private int itemID;
+    private ArrayList<Item> items;
 
     private int roomItem;
     private String itemName;
     private int itemWeight; 
     private int number;
     
-    
+    public int sand;
+    private int stone;
+    private int iron;
+    public int diamond;
 
     /**
      * Create a room described "description". Initially, it has
@@ -42,6 +46,7 @@ public class Room
         this.itemID = itemID;
         this.description = description;
         exits = new HashMap<>();
+        items = new ArrayList<Item>();
         
     }
 
@@ -107,6 +112,10 @@ public class Room
 
     public int getItemID(){
         return itemID;   
+    }
+    
+    public int setRoomID(int id){
+        return this.roomID = id;
     }
 
     public void createItems(){
