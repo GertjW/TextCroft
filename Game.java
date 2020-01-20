@@ -35,6 +35,7 @@ public class Game
     private int diamond = 0;
     private int stick = 0;
     private int wood_PickAxe = 0;
+    private int emerald = 0;
     
     private Stack<Integer> stack = new Stack<Integer>();
     
@@ -56,7 +57,7 @@ public class Game
         stack.pop();
         System.out.println("stack: " + stack);
         int newRoomID = (Integer) stack.peek();
-        Room.setRoomID(newRoomID);
+
         System.out.println(currentRoom.getLongDescription());
         }
     
@@ -74,13 +75,13 @@ public class Game
         //sand = 2
         //stone = 3
         //diamond = 4
-        //iron 5
+        //iron = 5
         //null = 0
         forest = new Room("You are now in the forest", 1, 1);
         winter= new Room("You are in a winter biome", 2, 1);
         desert = new Room("This is a sandy place, looks like a desert", 3, 2);
         jungle = new Room("this looks like a jungle", 4, 1);
-        jungle_tempel = new Room("You have found a hidden jungle tempel, and you see a big diamond, pick it up!.", 5, 4);
+        jungle_tempel = new Room("You have found a hidden jungle tempel, and you see a big Emerald, pick it up!.", 5, 4);
         village= new Room("You are now in a nice looking village, say hi to the people here!", 6, 4);
         savanna = new Room("You are in a Savanna", 7, 1);
         house = new Room("Welcome in you're own house", 8, 0);
@@ -269,10 +270,8 @@ public class Game
      * room, otherwise print an error message.
      */
     private void goRoom(Command command) 
-    {   
-        if (((String) command.matches("-?(0|[1-9]\\d*"))) {
-            Room nextRoom = currentRoom.setRoomID(command);
-        } else if(!command.hasSecondWord()) {
+    {
+        if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
