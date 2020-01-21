@@ -28,6 +28,8 @@ public class Game
     private HashMap<String, Integer> itemValue;
     private Inventory inv;
     private int powerLevel = 0;
+    private static int numberOfMoves;
+    private static int limitOfMoves;
     //game items
     
     private Stack<Integer> stack = new Stack<Integer>();
@@ -40,6 +42,8 @@ public class Game
         createRooms();
         parser = new Parser();
         this.inv = new Inventory();
+        numberOfMoves = 0;
+        limitOfMoves = 50;
 
     }
 
@@ -256,7 +260,10 @@ public class Game
         System.out.println("Your command words are:");
         System.out.println("go quit help use items inv back craft");
     }
+    
+    
 
+        
     /** 
      * Try to in to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -277,12 +284,16 @@ public class Game
 
         if (nextRoom == null) {
             System.out.println("You are just running around");
+               
+            
         }
         else {
+            boolean decision = Game.countMove();
             currentRoom = nextRoom;
             pushStack(stack, currentRoom);
             System.out.println(currentRoom.getLongDescription());
         }
+            
     }
     private void goRoom(int roomID) 
     {
@@ -365,6 +376,26 @@ public class Game
         }
         if(itemToUse.equals("dev") && currentRoom.getItemID() == 1){
             inv.use(999);
+        }
+    }
+    public static boolean countMove(){
+        // tel de stappen
+        numberOfMoves++;
+        
+        // Informatie over hoeveel stappen je hebt gezet / over hebt
+        if (numberOfMoves < limitOfMoves) {
+            System.out.println("Current number of moves : " + numberOfMoves);
+            System.out.println("Moves left : " + (limitOfMoves - numberOfMoves));
+            return false;
+            // Eind als het het maximum is bereikt
+        } else {
+            System.out.println("You have reached the maximum amount of moves");
+            System.out.println("Game over");
+            System.out.println();
+            System.out.println();
+            System.exit(0);
+            
+            return true;
         }
     }
 
