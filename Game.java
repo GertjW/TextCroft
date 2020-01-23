@@ -152,6 +152,7 @@ public class Game
         house.setExit("west", nether1);
 
         currentRoom = forest;  // start game outside     
+        pushStack(stack, currentRoom);
     }
 
     /**
