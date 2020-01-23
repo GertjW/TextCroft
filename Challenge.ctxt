@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Challenge
+comment0.text=\r\n\ class\ Achievements\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (jouw\ naam)\r\n\ @version\ (versie\ nummer\ of\ datum)\r\n
+comment1.params=challenges\ id\ passed
+comment1.target=Challenge(java.lang.String,\ int,\ boolean)
+comment2.params=
+comment2.target=java.lang.String\ getChallenge()
+comment3.params=
+comment3.target=int\ getChallengesID()
+comment4.params=
+comment4.target=boolean\ challengesPassed()
+comment5.params=hasPassed
+comment5.target=boolean\ setPassed(boolean)
+numComments=6

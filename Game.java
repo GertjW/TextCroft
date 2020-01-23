@@ -23,17 +23,18 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private HashMap<Integer, Room> rooms = new HashMap<>();
     private ArrayList<String> items; 
     private HashMap<String, Integer> itemValue;
     private Inventory inv;
-    private int powerLevel = 0;
+    private PowerLvl powerLvl;
+    private HashMap<Integer, Room> rooms = new HashMap<>();
     private static int numberOfMoves;
     private static int limitOfMoves;
+    //private boolean house = this.inv.getHouseInfo();
     //game items
-    
+
     private Stack<Integer> stack = new Stack<Integer>();
-    
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -42,9 +43,10 @@ public class Game
         createRooms();
         parser = new Parser();
         this.inv = new Inventory();
+        this.inv.setHouse(false);
+        this.powerLvl = new PowerLvl(0);
         numberOfMoves = 0;
         limitOfMoves = 50;
-
     }
 
     /**
@@ -52,7 +54,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room forest, winter, desert, jungle, jungle_tempel, village, savanna, house, cave, mineshaft, end, nether1, nether2, nether3, nether4, nether5, nether6;
+        Room forest, winter, desert, jungle, jungle_tempel, village, savanna, house, cave, mineshaft, mineshaft2, end, nether1, nether2, nether3, nether4, nether5, nether6, nether7, nether8;
 
         // create the rooms
 
@@ -67,19 +69,22 @@ public class Game
         rooms.put(2, winter= new Room("You are in a winter biome", 2, 1));
         rooms.put(3, desert = new Room("This is a sandy place, looks like a desert", 3, 2));
         rooms.put(4, jungle = new Room("this looks like a jungle", 4, 1));
-        rooms.put(5, jungle_tempel = new Room("You have found a hidden jungle tempel, maybe there are diamonds nearby.", 5, 4));
+        rooms.put(5, jungle_tempel = new Room("You have found a hidden jungle tempel. Be carefull there is a zombie boss nearby, you can choose to run away or fight", 5, 4));
         rooms.put(6, village= new Room("You are now in a nice looking village, say hi to the people here! You see an emerald, don't steal it!", 6, 6));
         rooms.put(7, savanna = new Room("You are in a Savanna", 7, 1));
-        rooms.put(8, house = new Room("Welcome in you're own house", 8, 0));
+        rooms.put(8, house = new Room("This looks like the best place to build a house", 8, 0));
         rooms.put(9, cave= new Room("You are under the ground, in a cave.", 9, 3));
         rooms.put(10, mineshaft= new Room("This is a MineShaft", 10, 5));
-        rooms.put(11, end = new Room("This is the end, kill the dragon and finish the game.", 11, 0));
-        rooms.put(12, nether1 = new Room("You are now in the Nether", 12, 0));
-        rooms.put(13, nether2 = new Room("You are now in the Nether2", 13, 0));
-        rooms.put(14, nether3 = new Room("You are now in the Nether3", 14, 0));
-        rooms.put(15, nether4 = new Room("You are now in the Nether4", 15, 0));
-        rooms.put(16, nether5 = new Room("You are now in the Nether", 16, 0));
-        rooms.put(17, nether6 = new Room("Look an portal, a way out!", 17, 0));
+        rooms.put(11, mineshaft2= new Room("You are really close to the end now, once you are in the end, you cant go back. Go east if you want to go to the end", 18, 4));
+        rooms.put(12, end = new Room("This is the end, kill the dragon and finish the game. Before you fight him, equip your gear and use all your potions!", 11, 0));
+        rooms.put(13, nether1 = new Room("You are now in the Nether. Here are a couple of chests that you can only open with a diamond pickaxe", 12, 0));
+        rooms.put(14, nether2 = new Room("You are now in the Nether", 13, 20));
+        rooms.put(15, nether3 = new Room("You are now in the Nether", 14, 0));
+        rooms.put(16, nether4 = new Room("You are now in the Nether", 15, 0));
+        rooms.put(17,nether5 = new Room("That looks like an Nether Wither, try to fight him or run away", 16, 0));
+        rooms.put(18,nether6 = new Room("You are now in the Nether", 17, 0));
+        rooms.put(19, nether7 = new Room("You are now in the Nether", 18, 0));
+        rooms.put(20, nether8 = new Room("There is a chest on the ground, but there is also a portal on your west side. You sure you wanna leave?", 19, 21));
 
         // initialise room exits
         forest.setExit("north", village);
@@ -103,14 +108,17 @@ public class Game
         cave.setExit("west", winter);
 
         mineshaft.setExit("north", cave);
-        mineshaft.setExit("east", end);
+        mineshaft.setExit("south", mineshaft2);
         mineshaft.setExit("west", jungle_tempel);
+
+        mineshaft2.setExit("north", mineshaft);
+        mineshaft2.setExit("east", end);
 
         village.setExit("north", savanna);
         village.setExit("south", forest);
 
-        savanna.setExit("east", nether1);
         savanna.setExit("south", village);
+        savanna.setExit("north", house);
 
         nether1.setExit("north", nether2);
         nether1.setExit("east", nether3);
@@ -121,9 +129,11 @@ public class Game
 
         nether3.setExit("north", nether5);
         nether3.setExit("east", nether6);
+        nether3.setExit("east", nether7);
         nether3.setExit("west", nether1);
 
         nether4.setExit("north", nether1);
+        nether4.setExit("south", nether8);
 
         nether5.setExit("south", nether3);
         nether5.setExit("west", nether2);
@@ -131,8 +141,17 @@ public class Game
         nether6.setExit("south", savanna);
         nether6.setExit("west", nether3);
 
-        currentRoom = forest;  // start game outside
-        pushStack(stack, currentRoom);
+        nether7.setExit("north", nether3);
+        nether7.setExit("west", nether4);
+
+        nether8.setExit("north", nether4);
+        nether8.setExit("west", jungle);
+
+            
+        house.setExit("south", savanna);
+        house.setExit("west", nether1);
+
+        currentRoom = forest;  // start game outside     
     }
 
     /**
@@ -162,9 +181,17 @@ public class Game
         System.out.println("Welcome in your new survival world");
         System.out.println("Textcraft is a survival game, where you need to collect stuff.");
         System.out.println("Eventually you have to go to the end, and kill the Ender Dragon.");
+        System.out.println("Before you go to the end you first have to complete some challenges");
+        System.out.println("You can open your challenge list by using the command: challenges");
+        System.out.println("If you completed a challenge, you will get a message");
+        System.out.println();
+ 
         inv.showCraftingTableStatus();
+        inv.printPowerLvl();
+        System.out.println();
         System.out.println("Type 'help' if you need help.");
         System.out.println();
+        System.out.println("You are currently homeless");
         System.out.println(currentRoom.getLongDescription());
     }
 
@@ -213,9 +240,20 @@ public class Game
             } else {
             //if (popStack(stack, currentRoom) != 0) {
                 goRoom(popStack(stack, currentRoom));
+                
+                
             //} else {
             }
-        }    
+        }
+        else if (commandWord.equals("equip")){
+            this.inv.equip();
+        }
+        else if (commandWord.equals("fight")){
+            fight();
+        }
+        else if (commandWord.equals("challenges")){
+            this.inv.showChallenges();
+        }
 
         // else command not recognised.
         return wantToQuit;
@@ -242,10 +280,10 @@ public class Game
             System.out.println("You can get here " + currentRoom.getItemName());}
         else if(currentRoom.getRoomID()==(9)){
             System.out.println("You can get here " + currentRoom.getItemName());}
-        else if(currentRoom.getRoomID()==(15)){
-            System.out.println("You can get here a potion");} //Speedpot
-        else if(currentRoom.getRoomID()==(14)){
-            System.out.println("You can get here a potion");} //Strengthpot
+        else if(currentRoom.getRoomID()==(10)){
+            System.out.println("You can get here " + currentRoom.getItemName());}
+        else if(currentRoom.getRoomID()==(18)){
+            System.out.println("You can get here " + currentRoom.getItemName());}
         else{System.out.println("You can't get anything here");}
     }
 
@@ -257,13 +295,15 @@ public class Game
         System.out.println();
         inv.showCraftingTableStatus();
         System.out.println();
+        inv.printPowerLvl();
+        System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("go quit help use items inv back craft");
+        System.out.println("go quit help use items inv back craft equip fight");
+        if(currentRoom.getRoomID()==(11)){
+            System.out.println("You can fight the Ender Dragon by using the command: fight");
+        }
     }
-    
-    
 
-        
     /** 
      * Try to in to one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -274,18 +314,14 @@ public class Game
             // if there is no second word, we don't know where to go...
             System.out.println("Go where?");
             return;
-        
-        
+
         }
         String direction = command.getSecondWord();
-
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
             System.out.println("You are just running around");
-               
-            
         }
         else {
             boolean decision = Game.countMove();
@@ -293,13 +329,13 @@ public class Game
             pushStack(stack, currentRoom);
             System.out.println(currentRoom.getLongDescription());
         }
-            
     }
     private void goRoom(int roomID) 
     {
         currentRoom = rooms.get(roomID);
         System.out.println(currentRoom.getLongDescription());
     }
+
     /** x
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
@@ -315,6 +351,7 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
+
     private void pushStack(Stack stack, Room currentRoom) {
         stack.push(currentRoom.getRoomID());
     }
@@ -328,6 +365,7 @@ public class Game
             return (Integer) stack.peek();
        }
     }
+
 
     private void increment(int i){
         this.inv.increment(currentRoom.getItemID(), i);
@@ -351,13 +389,47 @@ public class Game
         }
         else if(itemToCraft.equals("stone_axe")){
             inv.craft(9);
+        }
+        else if(itemToCraft.equals("iron_pickaxe")){
+            inv.craft(11);
+        }
+        else if(itemToCraft.equals("iron_sword")){
+            inv.craft(17);
+        }
+        else if(itemToCraft.equals("diamond_pickaxe")){
+            inv.craft(18);
+        }
+        else if(itemToCraft.equals("diamond_sword")){
+            inv.craft(12);
+        }
+        else if(itemToCraft.equals("helmet")){
+            inv.craft(13);
+        }
+        else if(itemToCraft.equals("chestplate")){
+            inv.craft(14);
+        }
+        else if(itemToCraft.equals("leggings")){
+            inv.craft(15);
+        }
+        else if(itemToCraft.equals("boots")){
+            inv.craft(16);
+        }
+        else if(itemToCraft.equals("house")){
+            if(currentRoom.getRoomID() == 8){
+                inv.craft(10);}
+            else{
+                System.out.println("You need 50 wood, 30 stone and 20 glass to build a house.");
+                System.out.println("The best place to build a house is at the northside from the Savanna!");
+                System.out.println("Try it there");}
+        }
 
-    }
+    
         else{System.out.println("You cant craft this");
         }
     }
+
     private void use(Command command){
-        
+
         if(!command.hasSecondWord()){
             System.out.println("what do you want to use");
             return;
@@ -365,20 +437,61 @@ public class Game
         String itemToUse = command.getSecondWord();
         if(itemToUse.equals("hand") && currentRoom.getItemID() == 1){
             increment(1);
-
+            System.out.println("Wood: +1");
+        } else if(currentRoom.getItemID() != 1){
+            System.out.println("You can't use that here"); 
         }
-        
+
         if(itemToUse.equals("wood_pickaxe") && currentRoom.getItemID() == 3){
             inv.use(7);
-        }
+        }else if(currentRoom.getItemID() != 3){
+                     System.out.println("You can't use that here");
+                 }
         if(itemToUse.equals("stone_axe") && currentRoom.getItemID() == 1){
             inv.use(9);
+        }else if(currentRoom.getItemID() != 1){
+                     System.out.println("You can't use that here");
+                 }
+        if(itemToUse.equals("iron_pickaxe") && currentRoom.getItemID() == 5){
+            inv.use(11);
+        }else if(currentRoom.getItemID() != 5){
+                     System.out.println("You can't use that here");
+                 }
+        if(itemToUse.equals("diamond_pickaxe"))
+            if(currentRoom.getItemID() == 4){
+                inv.use(18);}
+            else if(currentRoom.getItemID() == 20){
+                inv.use(22);
+            }
+            else if(currentRoom.getItemID() == 21){
+                inv.use(23);
+            } else{
+                System.out.println("You can't use that here"); 
+            }
+        if(itemToUse.equals("strength_potion")){
+            inv.use(19);
+        }    
+        if(itemToUse.equals("potions")){
+            inv.use(20);
         }
-        if(itemToUse.equals("dev") && currentRoom.getItemID() == 1){
+        if(itemToUse.equals("dev")){
             inv.use(999);
         }
     }
-    public static boolean countMove(){
+
+    private void fight(){
+        if(currentRoom.getRoomID() == 11){
+
+            this.inv.fightBoss("end");}
+        else if(currentRoom.getRoomID() == 5){            
+            this.inv.fightBoss("zombie");}
+        else if(currentRoom.getRoomID() == 15){          
+            this.inv.fightBoss("nether_wither");
+        }else{System.out.println("There is nothing to fight");
+        }
+    
+   }
+   public static boolean countMove(){
         // tel de stappen
         numberOfMoves++;
         
@@ -398,7 +511,4 @@ public class Game
             return true;
         }
     }
-
 }
-
-

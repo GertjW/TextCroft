@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=PowerLvl
+comment0.text=\r\n\ class\ PowerLvl\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (jouw\ naam)\r\n\ @version\ (versie\ nummer\ of\ datum)\r\n
+comment1.params=lvl
+comment1.target=PowerLvl(int)
+comment2.params=
+comment2.target=int\ getPowerLvl()
+comment3.params=power
+comment3.target=int\ increment(int)
+comment4.params=power
+comment4.target=int\ decrement(int)
+numComments=5
