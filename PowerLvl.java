@@ -5,6 +5,13 @@
  * @author (jouw naam)
  * @version (versie nummer of datum)
  */
+
+
+/**
+ * 
+ * 
+ */
+
 public class PowerLvl
 {
      private int powerLvl;

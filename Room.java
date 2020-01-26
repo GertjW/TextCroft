@@ -108,7 +108,10 @@ public class Room
     public int getItemID(){
         return itemID;   
     }
-
+    /**
+     * Create the items and give it an id.
+     * 
+     */
     public void createItems(){
         if(getItemID() == (1)){
             itemName = "wood"; 
@@ -136,7 +139,9 @@ public class Room
             itemWeight = 3;
         }  
     }
-
+    /**
+     * give the items a name, using the id.
+     */
     public String getItemName(){
         if(getItemID() == (1)){
             itemName = "wood";
@@ -156,6 +161,10 @@ public class Room
         return itemName;
     }
 
+    /**
+     * @param int 
+     * @return number from item
+     */
     public int getItemNumber(){
         if(getItemID() == (1)){
 

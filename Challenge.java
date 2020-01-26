@@ -7,10 +7,19 @@
  */
 public class Challenge
 {
+    /**
+     * fields
+     */
     
     private String challenges;
     private int id;
     private boolean passed;
+    
+    /**
+     * @param id from challenges 
+     * @return the challenge if boolean false
+     * else return boolean true
+     */
     
     public Challenge(String challenges, int id, boolean passed){
     this.challenges = challenges;

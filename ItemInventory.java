@@ -18,11 +18,9 @@ public class ItemInventory
 
    
    /**
-    *
+    * @Setter and getter for item
     * @param Set String Name
-    * @param Set int itemID
-    * @param Set int number(how many item do you have)
-    * @param Set int max(The maximun amount of items that you can have)
+    * @param return String;
     */
   
    public ItemInventory(String itemName, int itemID, int number, int max){
@@ -31,46 +29,29 @@ public class ItemInventory
        this.number = number;
        this.max = max;
     }
-
-    /**
-     * Getter for Item Name;
-     * @return getItemName;
-     */
+    
    public String getItemName(){
       return this.itemName;
     }
     
-  /**
-    * Getter for item ID
+   /**
+    * Setter and getter for itemID
+    * @param int set Item
+    * 
+    * Return item ID
     * @Return int
     */ 
    public int getItemID(){
      return itemID;
     }
-
-    /**
-     * Getter of itemNumber
-     * @return number;
-     */
     public int getNumber() { return this.number;}
 
-    /**
-     * Increment the numbers of the items by i (index)
-     * if i = 10, he increment the number of the items by 10
-     * @param i
-     */
     public void increment(int i){
        if(this.number + i <= this.max) {
            this.number += i;
        }
 
     }
-
-    /**
-     *decrement the numbers of the items by i (index)
-     *if i = 10, he decrement the number of the items by 10
-     * @param i
-     */
     public void decrement(int i){
        if(this.number - i >= 0){
            this.number -= i;
@@ -78,4 +59,25 @@ public class ItemInventory
     }
     
    
+    /**
+     * Set the location of the item based on the roomID
+     * @param int set itemRoom
+     * 
+     * Return the roomID of the item
+     * @return int
+     */
     
+    
+       
+    /**
+     * Set the value of the item
+     * 0 is useless, 1 is quest item
+     * @param int 
+     * 
+     * Return the value of the item
+     * @return int
+     */
+
+
+
+}
