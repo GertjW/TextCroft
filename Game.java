@@ -78,13 +78,14 @@ public class Game
         rooms.put(11, mineshaft2= new Room("You are really close to the end now, once you are in the end, you cant go back. Go east if you want to go to the end", 18, 4));
         rooms.put(12, end = new Room("This is the end, kill the dragon and finish the game. Before you fight him, equip your gear and use all your potions!", 11, 0));
         rooms.put(13, nether1 = new Room("You are now in the Nether. Here are a couple of chests that you can only open with a diamond pickaxe", 13, 0));
-        rooms.put(14, nether2 = new Room("You are now in the Nether, look a chest!", 13, 20));
-        rooms.put(15, nether3 = new Room("You are now in the Nether", 14, 0));
-        rooms.put(16, nether4 = new Room("You are now in the Nether", 15, 0));
-        rooms.put(17,nether5 = new Room("That looks like an Nether Wither, try to fight him or run away", 16, 0));
-        rooms.put(18,nether6 = new Room("You are now in the Nether", 17, 0));
-        rooms.put(19, nether7 = new Room("You are now in the Nether", 18, 0));
-        rooms.put(20, nether8 = new Room("There is a chest on the ground, but there is also a portal on your west side. You sure you wanna leave?", 19, 21));
+        rooms.put(14, nether2 = new Room("You are now in the Nether, look a chest!", 14, 20));
+        rooms.put(15, nether3 = new Room("You are now in the Nether", 15, 0));
+        rooms.put(16, nether4 = new Room("You are now in the Nether", 16, 0));
+        rooms.put(17,nether5 = new Room("That looks like an Nether Wither, try to fight him or run away", 17, 0));
+        rooms.put(18,nether6 = new Room("You are now in the Nether", 18, 0));
+        rooms.put(20, nether7 = new Room("There is a chest on the ground, but there is also a portal on your west side. You sure you wanna leave?", 20, 21));
+        rooms.put(19, nether8 = new Room("You are now in the Nether", 19, 0));
+
 
         // initialise room exits
         forest.setExit("north", village);
@@ -124,28 +125,31 @@ public class Game
         nether1.setExit("east", nether3);
         nether1.setExit("south", nether4);
 
-        nether2.setExit("east", nether5);
+        nether2.setExit("east", nether8);
         nether2.setExit("south", nether1);
 
-        nether3.setExit("north", nether5);
+
+        nether3.setExit("north", nether8);
         nether3.setExit("east", nether6);
-        nether3.setExit("east", nether7);
         nether3.setExit("west", nether1);
 
         nether4.setExit("north", nether1);
-        nether4.setExit("south", nether8);
+        nether4.setExit("south", nether7);
 
-        nether5.setExit("south", nether3);
-        nether5.setExit("west", nether2);
+        nether5.setExit("south", nether6);
+        nether5.setExit("west", nether8);
 
-        nether6.setExit("south", savanna);
+        nether6.setExit("north", nether5);
+        nether6.setExit("east", savanna);
         nether6.setExit("west", nether3);
 
-        nether7.setExit("north", nether3);
-        nether7.setExit("west", nether4);
+        nether8.setExit("east", nether5);
+        nether8.setExit("south", nether3);
+        nether8.setExit("west", nether2);
 
-        nether8.setExit("north", nether4);
-        nether8.setExit("west", jungle);
+
+        nether7.setExit("north", nether4);
+        nether7.setExit("west", jungle);
 
         house.setExit("south", savanna);
         house.setExit("east", nether1);
