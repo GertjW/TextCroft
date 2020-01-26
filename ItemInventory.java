@@ -29,29 +29,44 @@ public class ItemInventory
        this.number = number;
        this.max = max;
     }
-    
+
+    /**
+     * Getter for Item Name;
+     * @return getItemName;
+     */
    public String getItemName(){
       return this.itemName;
     }
     
-   /**
-    * Setter and getter for itemID
-    * @param int set Item
-    * 
-    * Return item ID
+  /**
+    * Getter for item ID
     * @Return int
     */ 
    public int getItemID(){
      return itemID;
     }
+
+    /**
+     * Getter of itemNumber
+     * @return number;
+     */
     public int getNumber() { return this.number;}
 
+    /**
+     *
+     * @param i
+     */
     public void increment(int i){
        if(this.number + i <= this.max) {
            this.number += i;
        }
 
     }
+
+    /**
+     *
+     * @param i
+     */
     public void decrement(int i){
        if(this.number - i >= 0){
            this.number -= i;

@@ -2,8 +2,8 @@ import java.util.HashMap;
 /**
  * class inventory - geef hier een beschrijving van deze class
  *
- * @author (jouw naam)
- * @version (versie nummer of datum)
+ * @author (Gertjan Wiersma)
+ * @version (26-1-20)
  */
 public class Inventory {
     HashMap<Integer, ItemInventory> inv = new HashMap<Integer, ItemInventory>();
@@ -52,6 +52,9 @@ public class Inventory {
 
     }
 
+    /**
+     *
+     */
     public void showInv() {
         for (int i : this.inv.keySet()) {
             ItemInventory item = this.inv.get(i);
@@ -303,7 +306,7 @@ public class Inventory {
             }
             else {
                 newItem.increment(1);
-                iron.decrement(1);
+                iron.decrement(2);
                 powerLvl.increment(20);
                 System.out.println(newItem.getItemName() + ": +1");
                 System.out.println("PowerLvl: +20");
@@ -406,9 +409,9 @@ public class Inventory {
             stone.increment(40);
             sticks.increment(40);
             craftingTable = true;
-            powerLvl.increment(20);
-            iron.increment(3);
-            diamond.increment(30);
+            powerLvl.increment(200);
+            iron.increment(10);
+
             break;
             case 22:
             itemToUse = this.inv.get(18);
@@ -483,14 +486,14 @@ public class Inventory {
         if(fight.equals("zombie")){
             if(kill_zombie.challengesPassed() == true){
                 System.out.println("You already killed this");}
-            else if(getPowerLvl() >= 30) {
+            else if(getPowerLvl() >= 20) {
                 System.out.println("You have killed the zombie");
                 System.out.println("Challenge: " + kill_zombie.getChallenge() + " passed");
                 diamond.increment(3);
                 System.out.println(diamond.getItemName() + ": +3");
                 kill_zombie.setPassed(true);
-            }else if(getPowerLvl() < 30){
-                System.out.println("You have killed the zombie");
+            }else if(getPowerLvl() < 20){
+                System.out.println("The Zombie have killed you");
                 System.out.println("You lost all your stuff");
                 for (int i : this.inv.keySet()) {
                     ItemInventory item = this.inv.get(i);
@@ -512,7 +515,7 @@ public class Inventory {
                 kill_witch.setPassed(true);
                 System.out.println("Challenge: " + kill_witch.getChallenge() + " passed");
             }else if(getPowerLvl() < 60){
-                System.out.println("You have killed the nether_witch");
+                System.out.println("The Nether_witch have killed you");
                 System.out.println("You lost all your stuff");
                 for (int i : this.inv.keySet()) {
                     ItemInventory item = this.inv.get(i);
