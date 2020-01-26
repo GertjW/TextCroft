@@ -467,7 +467,8 @@ public class Inventory {
             sticks.increment(40);
             craftingTable = true;
             powerLvl.increment(200);
-            iron.increment(10);
+            iron.increment(30);
+            diamond.increment(30);
 
             break;
             case 22:
