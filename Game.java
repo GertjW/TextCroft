@@ -30,8 +30,7 @@ public class Game
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private static int numberOfMoves;
     private static int limitOfMoves;
-    //private boolean house = this.inv.getHouseInfo();
-    //game items
+    
 
     private Stack<Integer> stack = new Stack<Integer>();
 
@@ -47,6 +46,12 @@ public class Game
         this.powerLvl = new PowerLvl(0);
         numberOfMoves = 0;
         limitOfMoves = 50;
+    }
+    
+    public static void main (String[] args)
+    {
+        Game game = new Game();
+        game.play();
     }
 
     /**
