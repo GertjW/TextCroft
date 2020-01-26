@@ -33,8 +33,11 @@ public class Room
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
+     * "an open court yard". Every room gets an roomID to track te room.
+     * Also in sertain rooms there are items to get, this item is given by itemID
      * @param description The room's description.
+     * @param roomID, the id that the room gets\
+     * @parama itemID
      */
     public Room(String description, int roomID, int itemID) 
     {
