@@ -18,9 +18,11 @@ public class ItemInventory
 
    
    /**
-    * @Setter and getter for item
+    *
     * @param Set String Name
-    * @param return String;
+    * @param Set int itemID
+    * @param Set int number(how many item do you have)
+    * @param Set int max(The maximun amount of items that you can have)
     */
   
    public ItemInventory(String itemName, int itemID, int number, int max){
@@ -53,7 +55,8 @@ public class ItemInventory
     public int getNumber() { return this.number;}
 
     /**
-     *
+     * Increment the numbers of the items by i (index)
+     * if i = 10, he increment the number of the items by 10
      * @param i
      */
     public void increment(int i){
@@ -64,7 +67,8 @@ public class ItemInventory
     }
 
     /**
-     *
+     *decrement the numbers of the items by i (index)
+     *if i = 10, he decrement the number of the items by 10
      * @param i
      */
     public void decrement(int i){
@@ -74,25 +78,4 @@ public class ItemInventory
     }
     
    
-    /**
-     * Set the location of the item based on the roomID
-     * @param int set itemRoom
-     * 
-     * Return the roomID of the item
-     * @return int
-     */
     
-    
-       
-    /**
-     * Set the value of the item
-     * 0 is uselass, 1 is quest item
-     * @param int 
-     * 
-     * Return the value of the item
-     * @return int
-     */
-
-
-
-}
