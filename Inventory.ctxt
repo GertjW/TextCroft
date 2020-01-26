@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Inventory
-comment0.text=\r\n\ class\ inventory\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (jouw\ naam)\r\n\ @version\ (versie\ nummer\ of\ datum)\r\n
+comment0.text=\r\n\ class\ inventory\ -\ geef\ hier\ een\ beschrijving\ van\ deze\ class\r\n\r\n\ @author\ (Gertjan\ Wiersma)\r\n\ @version\ (26-1-20)\r\n
 comment1.params=
 comment1.target=Inventory()
 comment10.params=
@@ -15,6 +15,7 @@ comment14.params=whatToFight
 comment14.target=void\ fightBoss(java.lang.String)
 comment2.params=
 comment2.target=void\ showInv()
+comment2.text=\r\n\r\n
 comment3.params=
 comment3.target=void\ showChallenges()
 comment4.params=

@@ -1,9 +1,11 @@
 import java.util.HashMap;
 /**
- * class inventory - geef hier een beschrijving van deze class
+ * A class fully about the inventory of the player and more. THe class generates items and gives the inventory back to
+ * the player if the player has one of these items.
+ * This class also crafts the items and make options how to use this items
  *
- * @author (jouw naam)
- * @version (versie nummer of datum)
+ * @author (Gertjan Wiersma)
+ * @version (26-1-20)
  */
 public class Inventory {
     HashMap<Integer, ItemInventory> inv = new HashMap<Integer, ItemInventory>();
@@ -15,7 +17,11 @@ public class Inventory {
     private int pl;
     private Game quit;
     private int potion_quest;
-    
+
+    /**
+     * create items(name, itemID, itemNumber and the itemMax)
+     *
+     */
     public Inventory() {
         //putting items in inv
         this.inv.put(1, new ItemInventory("wood", 1, 0, 64));
@@ -52,6 +58,10 @@ public class Inventory {
 
     }
 
+    /**
+     * a for each loops that displays the inventory to the user
+     * if the number of items for the user is bigger than 1, the inventory will display it
+     */
     public void showInv() {
         for (int i : this.inv.keySet()) {
             ItemInventory item = this.inv.get(i);
@@ -60,7 +70,10 @@ public class Inventory {
             }
         }
     }
-
+    /**
+     * a for each loops that displays the challenges to the user
+     * if the challenge is not passed, he will display it
+     */
     public void showChallenges(){
         for (int i : this.challenge.keySet()){
             Challenge challenges = this.challenge.get(i);
@@ -70,40 +83,80 @@ public class Inventory {
         }
     }
 
+    /**
+     * shows the craftingtable status
+     * if true, the craftingtable can be used
+     * if not, the craftingtable cannot be used
+     * the player need to craft one then
+     */
     public void showCraftingTableStatus() {
         System.out.println("craftingTable = " + craftingTable);
     }
 
+    /**
+     * gives the status of the house(true or false)
+     * depends on if the house is created or not
+     * @return houseInfo
+     */
     public boolean getHouseInfo() {
         System.out.println(house);
         return this.house;
     }
 
+    /**
+     * setter to set house true of false
+     * @param thing(true of false)
+     * @return ghouse
+     */
     public boolean setHouse(boolean thing) {
         this.house = thing;
         return house;
     }
 
+    /**
+     * @param itemIndex (the item that needs to be increment)
+     * @param number (amount of items that needs to be increment)
+     */
     public void increment(int itemIndex, int number) {
         ItemInventory item = this.inv.get(itemIndex);
         item.increment(number);
     }
 
+    /**
+     * @param itemIndex (the item that needs to be decrement)
+     * @param number (amount of items that needs to be decrement)
+     */
     public void decrement(int itemIndex, int number) {
         ItemInventory item = this.inv.get(itemIndex);
         item.decrement(number);
     }
 
+    /**
+     * printer for the powerlvl
+     */
     public void printPowerLvl() {
         this.pl = powerLvl.getPowerLvl();
         System.out.println("Your current Power lvl = " + pl);
     }
 
+    /**
+     * getter for the powerlvl
+     * @return powerlvl
+     */
     public int getPowerLvl() {
         this.pl = powerLvl.getPowerLvl();
         return pl;
     }
 
+    /**
+     * The craft system that is builed in the game
+     * what to craft depends on what the user wants to craft, and that will come back in a number
+     * the index that is given, will be the item that get crafted if the user has the right items
+     * otherwise he cant craft it
+     * In the code is exactly given what the user needs
+     * Sertain items can't be craft without craftingbench
+     * @param craftedItemIndex
+     */
     public void craft(int craftedItemIndex) {
         ItemInventory newItem = this.inv.get(craftedItemIndex);
         ItemInventory wood = this.inv.get(1);
@@ -303,7 +356,7 @@ public class Inventory {
             }
             else {
                 newItem.increment(1);
-                iron.decrement(1);
+                iron.decrement(2);
                 powerLvl.increment(20);
                 System.out.println(newItem.getItemName() + ": +1");
                 System.out.println("PowerLvl: +20");
@@ -329,6 +382,13 @@ public class Inventory {
         }
     }
 
+    /**
+     * The use system that is builed in the game
+     * what to use depends on what the user wants to use, and that will come back in a number
+     * the index that is given, will be the item that will be used if the user has the right item
+     * otherwise he cant use it.
+     * @param index
+     */
     public void use(int index) {
         ItemInventory itemToUse = this.inv.get(index);
         ItemInventory stone = this.inv.get(3);
@@ -406,9 +466,9 @@ public class Inventory {
             stone.increment(40);
             sticks.increment(40);
             craftingTable = true;
-            powerLvl.increment(20);
-            iron.increment(3);
-            diamond.increment(30);
+            powerLvl.increment(200);
+            iron.increment(10);
+
             break;
             case 22:
             itemToUse = this.inv.get(18);
@@ -433,13 +493,17 @@ public class Inventory {
 
     }
 
+    /**
+     * if the user has all the 4 parts of the gear he can equip it
+     * Powerlvl will increment by 60 then
+     * if all items are not complete you can't use this method
+     */
     public void equip() {
         ItemInventory diamond_helmet = this.inv.get(13);
         ItemInventory diamond_chestplate = this.inv.get(14);
         ItemInventory diamond_leggings = this.inv.get(15);
         ItemInventory diamond_boots = this.inv.get(16);
-        System.out.println(diamond_boots.getNumber());
-        System.out.println(diamond_chestplate.getNumber());
+
         if (diamond_helmet.getNumber() == 1 && diamond_chestplate.getNumber() == 1 && diamond_leggings.getNumber() == 1 && diamond_boots.getNumber() == 1) {
             System.out.println("PowerLvl : +60");
             powerLvl.increment(60);
@@ -457,10 +521,18 @@ public class Inventory {
         }
     }
 
+    /**
+     * The fight system that is builed in the game
+     * what to fight depends on what the user wants to fight, and that will come back in a number
+     * the index that is given, will be the fight that the user wants to do
+     * If the user has enough power he wins it, otherwise he will die and lose all his items
+     * @param whatToFight
+     */
     public void fightBoss(String whatToFight) {
         Challenge kill_zombie = this.challenge.get(2);
         Challenge kill_witch = this.challenge.get(3);
         Challenge kill_dragon = this.challenge.get(4);
+        Challenge get_diamond_challenge = this.challenge.get(6);
         ItemInventory diamond = this.inv.get(4);
         ItemInventory strength_pot = this.inv.get(19);
         String fight = whatToFight;
@@ -483,14 +555,17 @@ public class Inventory {
         if(fight.equals("zombie")){
             if(kill_zombie.challengesPassed() == true){
                 System.out.println("You already killed this");}
-            else if(getPowerLvl() >= 30) {
+            else if(getPowerLvl() >= 20) {
                 System.out.println("You have killed the zombie");
                 System.out.println("Challenge: " + kill_zombie.getChallenge() + " passed");
+                System.out.println("Challenge: " + get_diamond_challenge.getChallenge() + " passed");
                 diamond.increment(3);
                 System.out.println(diamond.getItemName() + ": +3");
                 kill_zombie.setPassed(true);
-            }else if(getPowerLvl() < 30){
-                System.out.println("You have killed the zombie");
+                get_diamond_challenge.setPassed(true);
+
+            }else if(getPowerLvl() < 20){
+                System.out.println("The Zombie have killed you");
                 System.out.println("You lost all your stuff");
                 for (int i : this.inv.keySet()) {
                     ItemInventory item = this.inv.get(i);
@@ -512,7 +587,7 @@ public class Inventory {
                 kill_witch.setPassed(true);
                 System.out.println("Challenge: " + kill_witch.getChallenge() + " passed");
             }else if(getPowerLvl() < 60){
-                System.out.println("You have killed the nether_witch");
+                System.out.println("The Nether_witch have killed you");
                 System.out.println("You lost all your stuff");
                 for (int i : this.inv.keySet()) {
                     ItemInventory item = this.inv.get(i);
