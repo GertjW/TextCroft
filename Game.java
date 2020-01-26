@@ -444,8 +444,9 @@ public class Game
         }
     }
     /**
-     * 
-     * 
+     * @param second word
+     * If the second word is an item that is useable, use the item
+     * else ask what he wants to use
      */
     private void use(Command command){
 
