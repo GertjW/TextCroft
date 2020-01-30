@@ -1,9 +1,11 @@
 
 /**
- * class Objects - geef hier een beschrijving van deze class
+ * ItemInventory class
+ * A class that creates items for the game, that can be put in the inventory
  *
- * @author (jouw naam)
- * @version (versie nummer of datum)
+ * @author Gertjan Wiersma
+ * @author Jochem Kruizinga
+ * @version (22-1-2020)
  */
 public class ItemInventory
 {
